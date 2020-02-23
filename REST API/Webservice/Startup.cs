@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Webservice.ContextHelpers;
 
 namespace Webservice
 {
@@ -64,6 +65,9 @@ namespace Webservice
 
             // Setup app settings helper
             services.AddScoped<AppSettingsHelper>();
+
+            // Setup database context helper
+            services.AddScoped<DatabaseContextHelper>();
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace Webservice
             {
                 // Reference helpers
                 var appSettingsHelper = scope.ServiceProvider.GetService<AppSettingsHelper>();
+                var dbContextHelper = scope.ServiceProvider.GetService<DatabaseContextHelper>();
 
                 // Setup how to handle unexpected errors (thrown exceptions)
                 if (env.IsDevelopment())
@@ -84,6 +89,11 @@ namespace Webservice
                 else
                     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts
                     app.UseHsts();
+
+                // Setup databases
+                bool databaseSetupSuccessfully = dbContextHelper.Initialize(out string setupMessage);
+                if (!databaseSetupSuccessfully)
+                    throw new Exception("Failed to establish a valid connection with the database.\n\nError: " + setupMessage);
 
                 // Setup CORS
                 app.UseCors("ALLOW_ALL_CORS");
