@@ -11,7 +11,7 @@ namespace DatabaseLibrary.Providers
     /// <summary>
     /// MySQL implementation of the db context.
     /// </summary>
-    public class MySqlDbContext : DbContextAbstract
+    public class MySqlDbContext : DbContext
     {
 
         #region Constructors
@@ -66,7 +66,7 @@ namespace DatabaseLibrary.Providers
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>States the number of rows affected by the command.</returns>
-        public override int ExecuteNonQueryCommand(string commandText, DbParameter[] parameters, out string message)
+        public override int ExecuteNonQueryCommand(string commandText, Dictionary<string, object> parameters, out string message)
         {
             // Create a new connection
             MySqlConnection connection = new MySqlConnection(ConnectionString);
@@ -76,9 +76,14 @@ namespace DatabaseLibrary.Providers
                 // Open connection to database
                 connection.Open();
 
+                // Prepare paramters
+                List<MySqlParameter> parameterList = new List<MySqlParameter>();
+                foreach (string key in parameters.Keys)
+                    parameterList.Add(new MySqlParameter(key, parameters[key]));
+
                 // Exexcute the command
                 MySqlCommand command = new MySqlCommand(commandText, connection);
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameterList.ToArray());
                 int count = command.ExecuteNonQuery();
 
                 // Respond
@@ -103,7 +108,7 @@ namespace DatabaseLibrary.Providers
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>Datatabe with all the rows that are retrieved.</returns>
-        public override DataTable ExecuteDataQueryCommand(string commandText, DbParameter[] parameters, out string message)
+        public override DataTable ExecuteDataQueryCommand(string commandText, Dictionary<string, object> parameters, out string message)
         {
             // Create a new connection
             MySqlConnection connection = new MySqlConnection(ConnectionString);
@@ -113,9 +118,14 @@ namespace DatabaseLibrary.Providers
                 // Open connection to database
                 connection.Open();
 
+                // Prepare paramters
+                List<MySqlParameter> parameterList = new List<MySqlParameter>();
+                foreach (string key in parameters.Keys)
+                    parameterList.Add(new MySqlParameter(key, parameters[key]));
+
                 // Exexcute the command
                 MySqlDataAdapter adapter = new MySqlDataAdapter(commandText, connection);
-                adapter.SelectCommand.Parameters.AddRange(parameters);
+                adapter.SelectCommand.Parameters.AddRange(parameterList.ToArray());
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 adapter.Dispose();
@@ -142,7 +152,7 @@ namespace DatabaseLibrary.Providers
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>States the number of rows affected by the command.</returns>
-        public override int ExecuteNonQueryProcedure(string procedure, DbParameter[] parameters, out string message)
+        public override int ExecuteNonQueryProcedure(string procedure, Dictionary<string, object> parameters, out string message)
         {
             // Create a new connection
             MySqlConnection connection = new MySqlConnection(ConnectionString);
@@ -152,10 +162,15 @@ namespace DatabaseLibrary.Providers
                 // Open connection to database
                 connection.Open();
 
+                // Prepare paramters
+                List<MySqlParameter> parameterList = new List<MySqlParameter>();
+                foreach (string key in parameters.Keys)
+                    parameterList.Add(new MySqlParameter(key, parameters[key]));
+
                 // Exexcute the command
                 MySqlCommand command = new MySqlCommand(procedure, connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddRange(parameters);
+                command.Parameters.AddRange(parameterList.ToArray());
                 int count = command.ExecuteNonQuery();
 
                 // Respond
@@ -180,7 +195,7 @@ namespace DatabaseLibrary.Providers
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>Datatabe with all the rows that are retrieved.</returns>
-        public override DataTable ExecuteDataQueryProcedure(string procedure, DbParameter[] parameters, out string message)
+        public override DataTable ExecuteDataQueryProcedure(string procedure, Dictionary<string, object> parameters, out string message)
         {
             // Create a new connection
             MySqlConnection connection = new MySqlConnection(ConnectionString);
@@ -190,9 +205,14 @@ namespace DatabaseLibrary.Providers
                 // Open connection to database
                 connection.Open();
 
+                // Prepare paramters
+                List<MySqlParameter> parameterList = new List<MySqlParameter>();
+                foreach (string key in parameters.Keys)
+                    parameterList.Add(new MySqlParameter(key, parameters[key]));
+
                 // Exexcute the command
                 MySqlDataAdapter adapter = new MySqlDataAdapter(procedure, connection);
-                adapter.SelectCommand.Parameters.AddRange(parameters);
+                adapter.SelectCommand.Parameters.AddRange(parameterList.ToArray());
                 adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 DataTable table = new DataTable();
                 adapter.Fill(table);

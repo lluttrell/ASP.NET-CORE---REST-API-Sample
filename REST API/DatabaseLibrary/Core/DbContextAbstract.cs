@@ -10,7 +10,7 @@ namespace DatabaseLibrary.Core
     /// Database context abstract.
     /// Template used by all provider implementations.
     /// </summary>
-    public abstract class DbContextAbstract
+    public abstract class DbContext
     {
 
         #region Constructors
@@ -18,7 +18,7 @@ namespace DatabaseLibrary.Core
         /// <summary>
         /// Uses the connection string to connect to the database.
         /// </summary>
-        public DbContextAbstract(string connectionString)
+        public DbContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
@@ -47,30 +47,29 @@ namespace DatabaseLibrary.Core
         /// <summary>
         /// Executes the provided command.
         /// </summary>
-        /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>States the number of rows affected by the command.</returns>
-        public abstract int ExecuteNonQueryCommand(string commandText, DbParameter[] parameters, out string message);
+        public abstract int ExecuteNonQueryCommand(string commandText, Dictionary<string, object> parameters, out string message);
 
         /// <summary>
         /// Executes the provided command and retrieves some data.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>Datatabe with all the rows that are retrieved.</returns>
-        public abstract DataTable ExecuteDataQueryCommand(string commandText, DbParameter[] parameters, out string message);
+        public abstract DataTable ExecuteDataQueryCommand(string commandText, Dictionary<string, object> parameters, out string message);
 
         /// <summary>
         /// Executes the provided stored procedure.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>States the number of rows affected by the command.</returns>
-        public abstract int ExecuteNonQueryProcedure(string procedure, DbParameter[] parameters, out string message);
+        public abstract int ExecuteNonQueryProcedure(string procedure, Dictionary<string, object> parameters, out string message);
 
         /// <summary>
         /// Executes the provided stored procedure and retrieves some data.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>Datatabe with all the rows that are retrieved.</returns>
-        public abstract DataTable ExecuteDataQueryProcedure(string procedure, DbParameter[] parameters, out string message);
+        public abstract DataTable ExecuteDataQueryProcedure(string procedure, Dictionary<string, object> parameters, out string message);
 
         #endregion
 
