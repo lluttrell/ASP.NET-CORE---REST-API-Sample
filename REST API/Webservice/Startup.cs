@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,34 +16,90 @@ namespace Webservice
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
+        #region Initialization
+
+        /// <summary>
+        /// Gives us access to the variables in the appsettings.json file.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Gives us access to the environment variables of the current selected profile.
+        /// List of all profiles can be found in Properties/launchSettings.json.
+        /// </summary>
+        public IHostingEnvironment HostingEnvironment { get; }
+
+        /// <summary>
+        /// Constructor called automatically in program.cs.
+        /// Using injection to get the parameters.
+        /// </summary>
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        {
+            Configuration = configuration;
+            HostingEnvironment = hostingEnvironment;
+        }
+
+        #endregion
+
+        #region Configuration
+
+        /// <summary>
+        ///  This method gets called by the runtime. 
+        ///  Use this method to add services to the container.
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
+            // Setup cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ALLOW_ALL_CORS", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                });
+            });
+
+            // Setup .net core version
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Setup app settings helper
+            services.AddScoped<AppSettingsHelper>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. 
+        /// Use this method to configure the HTTP request pipeline.
+        /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            // Get access to all the helpers added into the scope from ConfigureServices method
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+                // Reference helpers
+                var appSettingsHelper = scope.ServiceProvider.GetService<AppSettingsHelper>();
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+                // Setup how to handle unexpected errors (thrown exceptions)
+                if (env.IsDevelopment())
+                    app.UseDeveloperExceptionPage();
+                else
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts
+                    app.UseHsts();
+
+                // Setup CORS
+                app.UseCors("ALLOW_ALL_CORS");
+
+                app.UseHttpsRedirection();
+                app.UseMvc();
+
+                // Default listener to the app
+                app.Run(async (context) =>
+                {
+                    await context.Response.WriteAsync("Webservice started!");
+                });
+            }
         }
+
+        #endregion
+
     }
 }
