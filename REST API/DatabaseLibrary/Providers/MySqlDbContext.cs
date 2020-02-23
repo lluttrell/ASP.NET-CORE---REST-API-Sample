@@ -11,7 +11,7 @@ namespace DatabaseLibrary.Providers
     /// <summary>
     /// MySQL implementation of the db context.
     /// </summary>
-    public class MySqlDbContext : DbContextAbstract
+    public class MySqlDbContext : DbContext
     {
 
         #region Constructors

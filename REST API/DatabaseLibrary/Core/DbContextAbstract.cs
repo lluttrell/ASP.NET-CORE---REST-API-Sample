@@ -10,7 +10,7 @@ namespace DatabaseLibrary.Core
     /// Database context abstract.
     /// Template used by all provider implementations.
     /// </summary>
-    public abstract class DbContextAbstract
+    public abstract class DbContext
     {
 
         #region Constructors
@@ -18,7 +18,7 @@ namespace DatabaseLibrary.Core
         /// <summary>
         /// Uses the connection string to connect to the database.
         /// </summary>
-        public DbContextAbstract(string connectionString)
+        public DbContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
