@@ -32,13 +32,12 @@ namespace BusinessLibrary.Models
         }
 
         /// <summary>
-        /// Clone constructor.
+        /// Clone/Copy constructor.
         /// </summary>
+        /// <param name="instance">The object to clone from.</param>
         public ResponseMessage(ResponseMessage instance)
+            : this(instance.State, instance.Message, instance.Data)
         {
-            State = instance.State;
-            Message = instance.Message;
-            Data = instance.Data;
         }
 
         #endregion
