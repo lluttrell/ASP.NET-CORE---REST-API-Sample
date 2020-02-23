@@ -48,22 +48,22 @@ namespace DatabaseLibrary.Core
         /// Executes the provided command.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
-        /// <returns>States whether the execution was successful or not.</returns>
-        public abstract bool ExecuteNonQueryCommand(string commandText, DbParameter[] paramters, out string message);
+        /// <returns>States the number of rows affected by the command.</returns>
+        public abstract int ExecuteNonQueryCommand(string commandText, DbParameter[] parameters, out string message);
 
         /// <summary>
         /// Executes the provided command and retrieves some data.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
         /// <returns>Datatabe with all the rows that are retrieved.</returns>
-        public abstract DataTable ExecuteDataQueryCommand(string commandText, DbParameter[] paramters, out string message);
+        public abstract DataTable ExecuteDataQueryCommand(string commandText, DbParameter[] parameters, out string message);
 
         /// <summary>
         /// Executes the provided stored procedure.
         /// </summary>
         /// <param name="message">A detailed error message stating the reason when it fails.</param>
-        /// <returns>States whether the execution was successful or not.</returns>
-        public abstract bool ExecuteNonQueryProcedure(string procedure, DbParameter[] paramters, out string message);
+        /// <returns>States the number of rows affected by the command.</returns>
+        public abstract int ExecuteNonQueryProcedure(string procedure, DbParameter[] parameters, out string message);
 
         /// <summary>
         /// Executes the provided stored procedure and retrieves some data.
