@@ -60,6 +60,18 @@ namespace BusinessLibrary.Models
         [JsonProperty(PropertyName = "lastName")]
         public string LastName { get; set; }
 
+        /// <summary>
+        /// FUll name of the student.
+        /// </summary>
+        [JsonProperty(PropertyName = "fullName")]
+        public string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", FirstName, LastName);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -69,7 +81,7 @@ namespace BusinessLibrary.Models
         /// </summary>
         public override string ToString()
         {
-            return string.Format("{0} {1}", FirstName, LastName);
+            return FullName;
         }
 
         #endregion
