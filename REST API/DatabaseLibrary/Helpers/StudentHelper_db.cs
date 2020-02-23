@@ -2,6 +2,7 @@
 using DatabaseLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Net;
 using System.Text;
@@ -35,7 +36,7 @@ namespace DatabaseLibrary.Helpers
                 // Add to database
                 int rowsAffected = context.ExecuteNonQueryCommand
                     (
-                        commandText: "INSERT INTO `student` (id, first_name, last_name) values (@id, @first_name, @last_name)",
+                        commandText: "INSERT INTO students (id, first_name, last_name) values (@id, @first_name, @last_name)",
                         parameters: new Dictionary<string, object>()
                         {
                             { "@id", instance.Id },
@@ -50,6 +51,49 @@ namespace DatabaseLibrary.Helpers
                 // Return value
                 statusResponse = new StatusResponse("Student added successfully");
                 return instance;
+            }
+            catch (Exception exception)
+            {
+                statusResponse = new StatusResponse(exception);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a list of instances.
+        /// </summary>
+        public static List<Student_db> GetCollection(
+            DbContext context, out StatusResponse statusResponse)
+        {
+            try
+            {
+                // Get from database
+                DataTable table = context.ExecuteDataQueryCommand
+                    (
+                        commandText: "SELECT * FROM students",
+                        parameters: new Dictionary<string, object>()
+                        {
+
+                        },
+                        message: out string message
+                    );
+                if (table == null)
+                    throw new Exception(message);
+
+                // Parse data
+                List<Student_db> instances = new List<Student_db>();
+                foreach (DataRow row in table.Rows)
+                    instances.Add(new Student_db
+                            (
+                                id: row["id"].ToString(),
+                                firstName: row["first_name"].ToString(), 
+                                lastName: row["last_name"].ToString()
+                            )
+                        );
+
+                // Return value
+                statusResponse = new StatusResponse("Students list has been retrieved successfully.");
+                return instances;
             }
             catch (Exception exception)
             {
