@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BusinessLibrary.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Webservice.ContextHelpers;
+using Webservice.ControllerHelpers;
 
 namespace Webservice.Controllers
 {
@@ -50,25 +52,23 @@ namespace Webservice.Controllers
         [HttpGet]
         public ResponseMessage GetCollection()
         {
-            //var response = StudentHelper.GetCollection(
-            //    context: Database.PanopticaDbContext,
-            //    statusCode: out HttpStatusCode statusCode,
-            //    includeDetailedErrors: HostingEnvironment.IsDevelopment());
-            //HttpContext.Response.StatusCode = (int)statusCode;
-            //return response;
-            return null;
+            var response = StudentHelper.GetCollection(
+                context: Database.DbContext,
+                statusCode: out HttpStatusCode statusCode,
+                includeDetailedErrors: HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)statusCode;
+            return response;
         }
 
         // Adds a new instance.
         [HttpPost]
         public ResponseMessage Post([FromBody]JObject data)
         {
-            //var response = StudentHelper.Add(data,
-            //    context: Database.PanopticaDbContext,
-            //    statusCode: out HttpStatusCode statusCode,
-            //    includeDetailedErrors: HostingEnvironment.IsDevelopment());
-            //return response;
-            return null;
+            var response = StudentHelper.Add(data,
+                context: Database.DbContext,
+                statusCode: out HttpStatusCode statusCode,
+                includeDetailedErrors: HostingEnvironment.IsDevelopment());
+            return response;
         }
 
     }
