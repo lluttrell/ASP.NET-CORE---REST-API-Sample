@@ -14,7 +14,7 @@ namespace Webservice
 
         #region Constants
 
-        private const string SECTION__DATABASE = "Databases";
+        private const string SECTION__DATABASE = "Database";
         private const string FIELD__CONNECTION_STRING = "ConnectionString";
 
         #endregion
