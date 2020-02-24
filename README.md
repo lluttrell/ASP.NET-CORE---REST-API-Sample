@@ -67,6 +67,18 @@ Using one of the following:
     ```
     CTRL + SHIFT + B
     ```
+
+#### Setup the database
+
+1) Create a new database/schema in MySQL.
+2) Create a new table `students` which has 3 columns:
+   1) `id` varchar(45) / primary key
+   2) `first_name` varchar(45)
+   3) `last_name` varchar(45)
+
+#### Setup the appsettings.json
+
+1) Update the database connection string.
         
 #### Run the webservice
 
