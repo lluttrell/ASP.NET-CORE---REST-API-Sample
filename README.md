@@ -15,6 +15,7 @@ The things you need to install before you proceed with development.
 1) [Visual Studio (2017+)](https://visualstudio.microsoft.com/downloads/) [recommended]: make sure to include the ASP.NET and web development package.
 2) [.NET Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2): install the SDK (required) and the Runtime & Hosting Bundle (optional: if you need to test using IIS instead of IIS Express).
 3) IIS Express [recommended]: usually it is included with the installation of Visual Studio.
+4) [MySQL Community](https://dev.mysql.com/downloads/installer/) [required].
 
 ### Installing
 
