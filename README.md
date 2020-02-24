@@ -1,5 +1,14 @@
 # ASP.NET CORE / REST API Sample
 
+This repository is created for teaching and demonstration purposes. It is meant to help students learn how to work with REST APIs and apply different layers (data layer, business logic layer, and data access layer). The project is incomplete and suffers of several limitations:
+
+1) No continuous integration.
+2) No unit testing.
+3) Missing end-points / methods.
+4) No authentication / authorization.
+5) Missing API documentation.
+6) Semi-modular.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
