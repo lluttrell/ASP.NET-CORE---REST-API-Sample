@@ -1,1 +1,115 @@
 # ASP.NET CORE / REST API Sample
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+
+``
+Note that the recommended IDE for this project is Visual Studio.
+``
+    
+### Prerequisites
+
+The things you need to install before you proceed with development.
+
+1) [Visual Studio (2017+)](https://visualstudio.microsoft.com/downloads/) [recommended]: make sure to include the ASP.NET and web development package.
+2) [.NET Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2): install the SDK (required) and the Runtime & Hosting Bundle (optional: if you need to test using IIS instead of IIS Express).
+3) IIS Express [recommended]: usually it is included with the installation of Visual Studio.
+
+### Installing
+
+A step by step guide to get you started with development.
+
+#### Download and clone the repository
+
+```
+git clone https://github.com/omaddam/ASP.NET-CORE---REST-API-Sample.git
+```
+
+#### Initialize git flow
+
+```
+git flow init
+```
+
+#### Restore NuGet packages
+
+Using one of the following:
+
+- Command line:
+
+    ```
+    nuget restore "REST API.sln"
+    ```
+
+- Package Manager Console in Visual Studio:
+
+    ```
+    Update-Package
+    ```
+
+- Visual Studio rebuild: it automatically restores the packages on rebuild.
+
+#### Build the projects
+
+Using one of the following:
+
+- Command line:
+
+    ```
+    dotnet build
+    ```
+    For more information, see [dotnet build command](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build).
+
+- Visual Studio shortcut:
+
+    ```
+    CTRL + SHIFT + B
+    ```
+        
+#### Run the webservice
+
+Use either the command line or Visual Studio.
+
+##### Using command line
+
+1) Set the environment variables:
+
+    1) Set development mode to display unhandled exceptions in the browser.
+
+        ```
+        SET ASPNETCORE_ENVIRONMENT=Development
+        ```
+
+2) Run:
+
+    1) Using the source project:
+    
+        ```
+        dotnet run Webservice.csproject
+        ```
+
+    2) Using the build: (often found in bin\Debug or bin\Release)
+    
+        ```
+        dotnet Webservice.dll
+        ```
+
+##### Using Visual Studio
+
+1) Set the **Webservice** project as the startup project. 
+    
+    
+2) Set the launch profile:
+    1) Open the properties of Webservice project.
+    2) Go to Debug section.
+    3) Select "**IIS Express**" or "**Console**" profile.
+    
+    The list of all available launch profiles can be found in Webservice\Properties\launchSettings.json.
+
+3) Set the webservice project as the startup project.
+    
+4) Run the project:
+    ``
+    F5
+    ``
