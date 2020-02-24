@@ -7,8 +7,11 @@ This repository is created for teaching and demonstration purposes. It is meant 
 3) Missing end-points / methods.
 4) No authentication / authorization.
 5) Missing API documentation.
-6) Semi-modular.
-7) Uses .NET CORE 2.2 which is deprecated. Should migrate to .NET CORE 3.X.
+6) No API versioning.
+7) Semi-modular.
+8) Uses .NET CORE 2.2 which is deprecated. Should migrate to .NET CORE 3.X.
+
+For further information about REST API standards, check this site: [https://restfulapi.net/](https://restfulapi.net/).
 
 ## Getting Started
 
