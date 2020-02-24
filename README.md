@@ -8,6 +8,7 @@ This repository is created for teaching and demonstration purposes. It is meant 
 4) No authentication / authorization.
 5) Missing API documentation.
 6) Semi-modular.
+7) Uses .NET CORE 2.2 which is deprecated. Should migrate to .NET CORE 3.X.
 
 ## Getting Started
 
