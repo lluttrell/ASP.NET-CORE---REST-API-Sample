@@ -68,6 +68,7 @@ namespace Webservice.Controllers
                 context: Database.DbContext,
                 statusCode: out HttpStatusCode statusCode,
                 includeDetailedErrors: HostingEnvironment.IsDevelopment());
+            HttpContext.Response.StatusCode = (int)statusCode;
             return response;
         }
 
