@@ -79,6 +79,7 @@ Using one of the following:
 #### Setup the appsettings.json
 
 1) Update the database connection string.
+   1) For more information on how to construct a connection string, click [here](https://www.connectionstrings.com/mysql/).
         
 #### Run the webservice
 
